@@ -3,13 +3,11 @@
     x:Class="YomiVerse.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Views="clr-namespace:YomiVerse.Views"
     xmlns:local="clr-namespace:YomiVerse"
-    Shell.FlyoutBehavior="Disabled"
-    Title="YomiVerse">
+    Title="YomiVerse"
+    Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellContent ContentTemplate="{DataTemplate Views:LandingPageView}" Route="LandingPageView" />
 
 </Shell>
