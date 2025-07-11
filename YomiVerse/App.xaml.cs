@@ -1,4 +1,6 @@
-﻿namespace YomiVerse
+﻿using YomiVerse.Views;
+
+namespace YomiVerse
 {
     public partial class App : Application
     {
@@ -6,7 +8,7 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new LandingPageView();
         }
     }
 }

@@ -1,11 +1,153 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="YomiVerse.Views.LandingPageView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="YomiVerse.Views.LandingPageView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:SfTabView="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
+    xmlns:Views="clr-namespace:YomiVerse.Views;assembly=YomiVerse"
+    xmlns:local="clr-namespace:YomiVerse">
+
+    <ContentPage.Resources />
+    <ContentPage.Content>
+        <SfTabView:SfTabView
+            x:Name="m_tvMainTabView"
+            IndicatorBackground="Transparent"
+            TabBarBackground="{AppThemeBinding Light={StaticResource Light_SurfaceContainerHighest},
+                                               Dark={StaticResource Dark_SurfaceContainerHighest}}"
+            TabBarHeight="60"
+            TabBarPlacement="Bottom">
+
+            <SfTabView:SfTabItem
+                x:Name="m_tbiLibrary"
+                Content="{Views:LibraryView}"
+                Header="Library"
+                ImagePosition="Top"
+                ImageTextSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup>
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="ImageSource" Value="{AppThemeBinding Light=light_lib_normal, Dark=dark_lib_normal}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Light_OnSurfaceVar}, Dark={StaticResource Dark_OnSurfaceVar}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="ImageSource" Value="{AppThemeBinding Light=light_lib_selected, Dark=dark_lib_selected}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Light_Primary}, Dark={StaticResource Dark_Primary}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </SfTabView:SfTabItem>
+
+            <SfTabView:SfTabItem
+                x:Name="m_tbiUpdates"
+                Content="{Views:UpdatesView}"
+                Header="Updates"
+                ImagePosition="Top"
+                ImageTextSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup>
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="ImageSource" Value="{AppThemeBinding Light=light_updates_normal, Dark=dark_updates_normal}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Light_OnSurfaceVar}, Dark={StaticResource Dark_OnSurfaceVar}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="ImageSource" Value="{AppThemeBinding Light=light_updates_selected, Dark=dark_updates_selected}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Light_Primary}, Dark={StaticResource Dark_Primary}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </SfTabView:SfTabItem>
+
+            <SfTabView:SfTabItem
+                x:Name="m_tbiHistory"
+                Content="{Views:HistoryView}"
+                Header="History"
+                ImagePosition="Top"
+                ImageTextSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup>
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="ImageSource" Value="{AppThemeBinding Light=light_history_normal, Dark=dark_history_normal}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Light_OnSurfaceVar}, Dark={StaticResource Dark_OnSurfaceVar}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="ImageSource" Value="{AppThemeBinding Light=light_history_selected, Dark=dark_history_selected}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Light_Primary}, Dark={StaticResource Dark_Primary}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </SfTabView:SfTabItem>
+
+            <SfTabView:SfTabItem
+                x:Name="m_tbiBrowse"
+                Content="{Views:BrowseView}"
+                Header="Browse"
+                ImagePosition="Top"
+                ImageTextSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup>
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="ImageSource" Value="{AppThemeBinding Light=light_browse_normal, Dark=dark_browse_normal}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Light_OnSurfaceVar}, Dark={StaticResource Dark_OnSurfaceVar}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="ImageSource" Value="{AppThemeBinding Light=light_browse_selected, Dark=dark_browse_selected}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Light_Primary}, Dark={StaticResource Dark_Primary}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </SfTabView:SfTabItem>
+
+            <SfTabView:SfTabItem
+                x:Name="m_tbiMore"
+                Content="{Views:MoreView}"
+                Header="More"
+                ImagePosition="Top"
+                ImageTextSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup>
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="ImageSource" Value="{AppThemeBinding Light=light_more_normal, Dark=dark_more_normal}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Light_OnSurfaceVar}, Dark={StaticResource Dark_OnSurfaceVar}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="ImageSource" Value="{AppThemeBinding Light=light_more_selected, Dark=dark_more_selected}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Light_Primary}, Dark={StaticResource Dark_Primary}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </SfTabView:SfTabItem>
+        </SfTabView:SfTabView>
+    </ContentPage.Content>
+
+
 </ContentPage>
