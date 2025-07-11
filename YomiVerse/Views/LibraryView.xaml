@@ -2,11 +2,40 @@
 <ContentView
     x:Class="YomiVerse.Views.LibraryView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to Library"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:YomiVerse">
+
+    <Border Background="{AppThemeBinding Light={StaticResource Light_Grey1}, Dark={StaticResource Dark_Grey12}}" StrokeThickness="0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.08*" />
+                <RowDefinition Height="0.9*" />
+            </Grid.RowDefinitions>
+            <Border
+                Grid.Row="0"
+                Background="{AppThemeBinding Light={StaticResource Light_SurfaceContainerHighest},
+                                             Dark={StaticResource Dark_SurfaceContainerHighest}}"
+                StrokeThickness="0">
+                <Grid BackgroundColor="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Margin="15,0,0,0"
+                        FontAttributes="Bold"
+                        FontAutoScalingEnabled="True"
+                        FontSize="20"
+                        Text="Library"
+                        TextColor="{AppThemeBinding Light={StaticResource Light_OnSurface},
+                                                    Dark={StaticResource Dark_OnSurface}}"
+                        VerticalTextAlignment="Center" />
+                </Grid>
+            </Border>
+            <Border Grid.Row="1" StrokeThickness="0">
+                <Grid />
+            </Border>
+        </Grid>
+    </Border>
+
 </ContentView>

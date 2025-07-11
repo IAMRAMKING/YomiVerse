@@ -1,4 +1,5 @@
-﻿using YomiVerse.Views;
+﻿using Microsoft.Maui.Controls;
+using YomiVerse.Views;
 
 namespace YomiVerse
 {
@@ -7,8 +8,11 @@ namespace YomiVerse
         public App()
         {
             InitializeComponent();
+        }
 
-            MainPage = new LandingPageView();
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            return new Window(new LandingPageView());
         }
     }
 }
