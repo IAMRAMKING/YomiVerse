@@ -3,7 +3,15 @@
     x:Class="YomiVerse.Views.LibraryView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Services="clr-namespace:YomiVerse.Services"
+    xmlns:ViewModels="clr-namespace:YomiVerse.ViewModels"
     xmlns:local="clr-namespace:YomiVerse">
+    <ContentView.BindingContext>
+        <ViewModels:LibraryViewModel />
+    </ContentView.BindingContext>
+    <ContentView.Resources>
+        <Services:ByteToImageConverter x:Key="ByteToImageConverter" />
+    </ContentView.Resources>
 
     <Border Background="{AppThemeBinding Light={StaticResource Light_Grey1}, Dark={StaticResource Dark_Grey12}}" StrokeThickness="0">
         <Grid>
@@ -33,7 +41,21 @@
                 </Grid>
             </Border>
             <Border Grid.Row="1" StrokeThickness="0">
-                <Grid />
+                <ListView ItemsSource="{Binding LibraryItems}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="10" Orientation="Horizontal">
+                                    <Image
+                                        HeightRequest="60"
+                                        Source="{Binding Title_ImageBytes, Converter={StaticResource ByteToImageConverter}}"
+                                        WidthRequest="60" />
+                                    <Label Text="{Binding TitleName}" VerticalOptions="Center" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Border>
         </Grid>
     </Border>

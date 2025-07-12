@@ -1,9 +1,21 @@
-namespace YomiVerse.Views;
+using YomiVerse.ViewModels;
 
-public partial class BrowseView : ContentView
+namespace YomiVerse.Views
 {
-	public BrowseView()
-	{
-		InitializeComponent();
-	}
+    public partial class BrowseView : ContentView
+    {
+        public BrowseView()
+        {
+            InitializeComponent();
+
+            // Load saved sources once the view appears
+            this.Loaded += async (s, e) =>
+            {
+                if (BindingContext is BrowseVewModel vm)
+                {
+                    await vm.RefreshSourcesOnLoad();
+                }
+            };
+        }
+    }
 }

@@ -2,28 +2,35 @@
 <ContentView
     x:Class="YomiVerse.Views.BrowseView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:SfInputLayout="clr-namespace:Syncfusion.Maui.Toolkit.TextInputLayout;assembly=Syncfusion.Maui.Toolkit"
+    xmlns:ViewModels="clr-namespace:YomiVerse.ViewModels"
+    x:Name="BrowseRoot">
+
+    <ContentView.BindingContext>
+        <ViewModels:BrowseVewModel />
+    </ContentView.BindingContext>
 
     <Border Background="{AppThemeBinding Light={StaticResource Light_Grey1}, Dark={StaticResource Dark_Grey12}}" StrokeThickness="0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.08*" />
-                <RowDefinition Height="0.9*" />
+                <RowDefinition Height="0.92*" />
             </Grid.RowDefinitions>
+
+            <!--  Header  -->
             <Border
                 Grid.Row="0"
                 Background="{AppThemeBinding Light={StaticResource Light_SurfaceContainerHighest},
                                              Dark={StaticResource Dark_SurfaceContainerHighest}}"
                 StrokeThickness="0">
-                <Grid BackgroundColor="Transparent">
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.5*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label
                         Margin="15,0,0,0"
                         FontAttributes="Bold"
-                        FontAutoScalingEnabled="True"
                         FontSize="20"
                         Text="Browse"
                         TextColor="{AppThemeBinding Light={StaticResource Light_OnSurface},
@@ -31,9 +38,73 @@
                         VerticalTextAlignment="Center" />
                 </Grid>
             </Border>
-            <Border Grid.Row="1" StrokeThickness="0">
-                <Grid />
-            </Border>
+
+            <!--  Main Content  -->
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout Padding="10" Spacing="15">
+
+                    <!--  Form Section  -->
+                    <Entry Placeholder="Website URL" Text="{Binding Url}" />
+                    <Entry Placeholder="List XPath" Text="{Binding ListXPath}" />
+                    <Entry Placeholder="Title XPath (relative)" Text="{Binding TitleXPath}" />
+                    <Entry Placeholder="Link XPath (relative)" Text="{Binding LinkXPath}" />
+                    <Entry Placeholder="Image XPath (relative)" Text="{Binding ImageXPath}" />
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Button Command="{Binding BrowseCommand}" Text="Browse" />
+                        <Button Command="{Binding SaveSourceCommand}" Text="Save Source" />
+                    </HorizontalStackLayout>
+
+                    <!--  Saved Sources  -->
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Saved Sources" />
+
+                    <CollectionView ItemsSource="{Binding SavedSources}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame
+                                    Margin="0,5"
+                                    Padding="8"
+                                    BorderColor="Gray">
+                                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                                        <!--  Tap anywhere on left block to load  -->
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.LoadSourceCommand, Source={x:Reference BrowseRoot}}" CommandParameter="{Binding .}" />
+                                        </Grid.GestureRecognizers>
+
+                                        <!--  Left: Info  -->
+                                        <VerticalStackLayout Grid.Column="0">
+                                            <Label
+                                                FontSize="14"
+                                                LineBreakMode="TailTruncation"
+                                                Text="{Binding Url}" />
+                                            <Label
+                                                FontSize="12"
+                                                LineBreakMode="TailTruncation"
+                                                Text="{Binding ListXPath}"
+                                                TextColor="Gray" />
+                                        </VerticalStackLayout>
+
+                                        <!--  Right: Delete button  -->
+                                        <Button
+                                            Grid.Column="1"
+                                            Padding="5"
+                                            BackgroundColor="Transparent"
+                                            Command="{Binding BindingContext.DeleteSourceCommand, Source={x:Reference BrowseRoot}}"
+                                            CommandParameter="{Binding .}"
+                                            FontSize="16"
+                                            Text="🗑"
+                                            TextColor="Red" />
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+            </ScrollView>
         </Grid>
     </Border>
 </ContentView>

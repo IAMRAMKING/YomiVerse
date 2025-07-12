@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Toolkit:Popup
+    x:Class="YomiVerse.Views.BrowseWebListPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Name="RootPopup"
+    HorizontalOptions="Fill"
+    VerticalOptions="Fill">
+    <ScrollView>
+        <VerticalStackLayout Padding="10">
+            <CollectionView ItemsSource="{Binding MangaList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+                            Margin="5"
+                            Padding="5"
+                            BorderColor="Gray">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference Name=RootPopup}}" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+
+                            <HorizontalStackLayout>
+                                <Image
+                                    HeightRequest="90"
+                                    Source="{Binding ImageUrl}"
+                                    WidthRequest="60" />
+                                <Label
+                                    Padding="10,0"
+                                    FontSize="16"
+                                    Text="{Binding Title}"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</Toolkit:Popup>
