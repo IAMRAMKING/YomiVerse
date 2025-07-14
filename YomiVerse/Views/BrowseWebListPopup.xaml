@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <Toolkit:Popup
     x:Class="YomiVerse.Views.BrowseWebListPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -7,34 +6,55 @@
     x:Name="RootPopup"
     HorizontalOptions="Fill"
     VerticalOptions="Fill">
-    <ScrollView>
-        <VerticalStackLayout Padding="10">
-            <CollectionView ItemsSource="{Binding MangaList}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame
-                            Margin="5"
-                            Padding="5"
-                            BorderColor="Gray">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference Name=RootPopup}}" CommandParameter="{Binding .}" />
-                            </Frame.GestureRecognizers>
 
-                            <HorizontalStackLayout>
-                                <Image
-                                    HeightRequest="90"
-                                    Source="{Binding ImageUrl}"
-                                    WidthRequest="60" />
-                                <Label
-                                    Padding="10,0"
-                                    FontSize="16"
-                                    Text="{Binding Title}"
-                                    VerticalOptions="Center" />
-                            </HorizontalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
+    <VerticalStackLayout
+        Padding="10"
+        Spacing="10"
+        VerticalOptions="FillAndExpand">
+
+        <!--  SearchBar  -->
+        <SearchBar
+            Placeholder="Search comics..."
+            SearchCommand="{Binding SearchCommand}"
+            SearchCommandParameter="{Binding Text, Source={RelativeSource Self}}" />
+
+        <!--  Comics Grid  -->
+        <CollectionView
+            ItemsLayout="VerticalGrid, 3"
+            ItemsSource="{Binding PagedMangaList}"
+            SelectionMode="None"
+            VerticalOptions="FillAndExpand">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Margin="5"
+                        Padding="5"
+                        CornerRadius="10"
+                        HasShadow="True">
+
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference RootPopup}}" CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+
+                        <VerticalStackLayout Spacing="5">
+                            <Image
+                                Aspect="AspectFill"
+                                HeightRequest="150"
+                                HorizontalOptions="Center"
+                                Source="{Binding ImageUrl}"
+                                WidthRequest="100" />
+
+                            <Label
+                                FontSize="13"
+                                HorizontalTextAlignment="Center"
+                                LineBreakMode="TailTruncation"
+                                MaxLines="2"
+                                Text="{Binding Title}" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
 </Toolkit:Popup>

@@ -67,5 +67,14 @@ namespace YomiVerse.Services
                 await m_obSqlConnection.DeleteAsync(item);
             }
         }
+
+        public async Task DeleteLibraryEntryAsync(int id)
+        {
+            var item = await m_obSqlConnection.FindAsync<LibraryList>(id);
+            if (item != null)
+            {
+                await m_obSqlConnection.DeleteAsync(item);
+            }
+        }
     }
 }

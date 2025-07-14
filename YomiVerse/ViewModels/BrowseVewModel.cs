@@ -82,7 +82,9 @@ namespace YomiVerse.ViewModels
                     return;
                 }
 
-                var popup = new BrowseWebListPopup(items);
+                //var popup = new BrowseWebListPopup(items);
+                var popup = new BrowseWebListPopup(this); // Pass the ViewModel
+
                 Application.Current.MainPage.ShowPopup(popup);
             }
             catch (Exception ex)

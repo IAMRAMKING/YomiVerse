@@ -5,59 +5,118 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Services="clr-namespace:YomiVerse.Services"
     xmlns:ViewModels="clr-namespace:YomiVerse.ViewModels"
-    xmlns:local="clr-namespace:YomiVerse">
+    x:Name="LibraryRoot">
+
     <ContentView.BindingContext>
         <ViewModels:LibraryViewModel />
     </ContentView.BindingContext>
+
     <ContentView.Resources>
         <Services:ByteToImageConverter x:Key="ByteToImageConverter" />
+        <Services:IntToBoolConverter x:Key="IntToBoolConverter" />
     </ContentView.Resources>
 
     <Border Background="{AppThemeBinding Light={StaticResource Light_Grey1}, Dark={StaticResource Dark_Grey12}}" StrokeThickness="0">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.08*" />
-                <RowDefinition Height="0.9*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+
+            <!--  Header  -->
             <Border
                 Grid.Row="0"
+                Padding="15,10"
                 Background="{AppThemeBinding Light={StaticResource Light_SurfaceContainerHighest},
                                              Dark={StaticResource Dark_SurfaceContainerHighest}}"
                 StrokeThickness="0">
-                <Grid BackgroundColor="Transparent">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.5*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+
+                    <!--  Title Label  -->
                     <Label
-                        Margin="15,0,0,0"
                         FontAttributes="Bold"
-                        FontAutoScalingEnabled="True"
                         FontSize="20"
                         Text="Library"
                         TextColor="{AppThemeBinding Light={StaticResource Light_OnSurface},
                                                     Dark={StaticResource Dark_OnSurface}}"
                         VerticalTextAlignment="Center" />
+
+                    <!--  Delete Button  -->
+                    <Button
+                        Grid.Column="1"
+                        Padding="10,5"
+                        BackgroundColor="Red"
+                        Command="{Binding DeleteSelectedCommand}"
+                        FontSize="14"
+                        IsVisible="{Binding SelectedItems.Count, Converter={StaticResource IntToBoolConverter}}"
+                        Text="Delete"
+                        TextColor="White" />
                 </Grid>
             </Border>
-            <Border Grid.Row="1" StrokeThickness="0">
-                <ListView ItemsSource="{Binding LibraryItems}">
-                    <ListView.ItemTemplate>
+
+            <!--  Grid List  -->
+            <ScrollView Grid.Row="1">
+                <CollectionView
+                    Margin="10"
+                    ItemsLayout="VerticalGrid, 3"
+                    ItemsSource="{Binding LibraryItems}"
+                    SelectedItems="{Binding SelectedItems, Mode=TwoWay}"
+                    SelectionMode="Multiple">
+
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <StackLayout Padding="10" Orientation="Horizontal">
+                            <Frame
+                                Margin="5"
+                                Padding="0"
+                                BackgroundColor="{AppThemeBinding Light=White,
+                                                                  Dark=#1E1E1E}"
+                                CornerRadius="14"
+                                HasShadow="True">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.ComicTappedCommand, Source={x:Reference LibraryRoot}}" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+
+                                <VerticalStackLayout
+                                    Padding="8"
+                                    HorizontalOptions="Center"
+                                    Spacing="5">
+
                                     <Image
-                                        HeightRequest="60"
+                                        Aspect="AspectFill"
+                                        HeightRequest="150"
                                         Source="{Binding Title_ImageBytes, Converter={StaticResource ByteToImageConverter}}"
-                                        WidthRequest="60" />
-                                    <Label Text="{Binding TitleName}" VerticalOptions="Center" />
-                                </StackLayout>
-                            </ViewCell>
+                                        WidthRequest="100">
+                                        <Image.Clip>
+                                            <RoundRectangleGeometry CornerRadius="10" Rect="0,0,100,150" />
+                                        </Image.Clip>
+                                    </Image>
+
+                                    <Label
+                                        FontSize="13"
+                                        HorizontalTextAlignment="Center"
+                                        MaxLines="2"
+                                        Text="{Binding TitleName}"
+                                        TextColor="{AppThemeBinding Light=Black,
+                                                                    Dark=White}" />
+                                </VerticalStackLayout>
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroupList>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="Pressed">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="#DDDDDD" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateGroupList>
+                                </VisualStateManager.VisualStateGroups>
+                            </Frame>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Border>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
         </Grid>
     </Border>
-
 </ContentView>
